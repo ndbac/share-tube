@@ -2,9 +2,11 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { ShareRecord } from '../shares/shares.entity';
 
 @Entity('users')
 export class UserRecord {
@@ -34,6 +36,9 @@ export class UserRecord {
     name: 'refresh_token',
   })
   refreshToken: string;
+
+  @OneToMany(() => ShareRecord, (share) => share.user)
+  shares: ShareRecord[];
 
   @CreateDateColumn({
     name: 'created_at',
