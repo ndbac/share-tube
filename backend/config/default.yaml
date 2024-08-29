@@ -36,6 +36,6 @@ bcrypt:
 
 jsonwebtoken:
   secretKey: sample-jsonwebtoken-secret-key
-  expiresIn:  900 # 15 mins
+  expiresIn:  10 # 15 mins
   subject: sharetube-application
   audience: sharetube-user

@@ -70,8 +70,38 @@ export class UserService {
     };
   }
 
-  async getProfile() {
-    return null;
+  async getProfile(userId: string) {
+    const user = await this.userRepository.findOneOrFail({
+      where: { id: userId },
+    });
+
+    return _.pick(user, ['id', 'name', 'email', 'createdAt', 'updatedAt']);
+  }
+
+  async refreshAccountToken(userId: string, refreshToken: string) {
+    const user = await this.userRepository.findOneByOrFail({ id: userId });
+    const isMatchedToken = await this.encryptService.compare(
+      refreshToken,
+      user.refreshToken,
+    );
+    if (!isMatchedToken) {
+      throw new ForbiddenException('Invalid token');
+    }
+
+    const token = this.jwtService.signToken({
+      email: user.email,
+      userId: user.id,
+    });
+    const newRefreshToken = generateRandomString(REFRESH_TOKEN_LENGTH);
+    const hashedRefreshToken = await this.encryptService.hash(refreshToken);
+    await this.userRepository.update(user.id, {
+      refreshToken: hashedRefreshToken,
+    });
+
+    return {
+      ..._.omit(user, ['password', 'refreshToken']),
+      credential: { token, refreshToken: newRefreshToken },
+    };
   }
 
   private async isAbleToRegisterAccount(data: CreateUserInputDto) {
