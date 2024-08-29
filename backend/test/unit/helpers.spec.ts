@@ -32,6 +32,16 @@ describe('getBearerTokenFromRequest', () => {
     expect(token).toStrictEqual('abcdefghijklmn');
   });
 
+  it('should parse bearer token successfully (proxy-authorization)', () => {
+    const req = {
+      headers: {
+        'proxy-authorization': 'Bearer abcdefghijklmn',
+      },
+    };
+    const token = getBearerTokenFromRequest(req as Request);
+    expect(token).toStrictEqual('abcdefghijklmn');
+  });
+
   it('should return undefined if no authorization header', () => {
     const req = {
       headers: {},
