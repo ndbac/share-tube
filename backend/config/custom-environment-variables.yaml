@@ -17,3 +17,9 @@ db:
     logging:
       __name: MAIN_POSTGRES_LOGGING_ENABLED
       __format: json
+  migration:
+    host: MAIN_POSTGRES_HOST
+    port: MAIN_POSTGRES_PORT
+    database: MAIN_POSTGRES_DATABASE
+    username: MAIN_POSTGRES_USERNAME
+    password: MAIN_POSTGRES_PASSWORD
