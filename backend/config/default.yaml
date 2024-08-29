@@ -1,0 +1,26 @@
+service:
+  name: ShareTube Backend Service
+  description: Sharetube backend service
+  baseUrl: /api/sharetub
+  apiVersion: 0.1.0
+  docsBaseUrl: /sharetube/docs
+
+server:
+  port: 3000
+  swaggerSchema: http
+  hostname: localhost:3000
+  cors:
+    allowedHeaders: 'authorization,content-type'
+    exposedHeaders: 'authorization,x-pagination-page,x-pagination-page-size,x-pagination-total'
+
+db:
+  postgres:
+    type: postgres
+    url: postgres://zaapi:zaapiPGlocal@localhost:6432/zaapi-payment
+    dbName: zaapi-payment
+    schema: public
+    keepConnectionAlive: false
+    synchronize: false
+    ssl: false
+    dropSchema: false
+    logging: false

@@ -1,0 +1,19 @@
+server:
+  port: APP_PORT
+  swaggerSchema: SWAGGER_SCHEMA
+  hostname: SERVER_HOSTNAME
+
+db:
+  postgres:
+    url: MAIN_POSTGRES_URL
+    ssl:
+      __name: MAIN_POSTGRES_SSL
+      __format: json
+    dbName: MAIN_POSTGRES_DB_NAME
+    schema: MAIN_POSTGRES_SCHEMA
+    synchronize:
+      __name: MAIN_POSTGRES_SYNC_ENABLED
+      __format: json
+    logging:
+      __name: MAIN_POSTGRES_LOGGING_ENABLED
+      __format: json
