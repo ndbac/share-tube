@@ -47,8 +47,8 @@ export class UserService {
       where: { email: data.email },
     });
     const isMatchedPassword = await this.encryptService.compare(
-      user.password,
       data.password,
+      user.password,
     );
     if (!isMatchedPassword) {
       throw new ForbiddenException('Invalid email or password');
