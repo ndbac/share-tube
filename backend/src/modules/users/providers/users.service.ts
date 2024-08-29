@@ -1,11 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUserInputDto, UserLoginInputDto } from '../dto/users.dto';
-import { UserRepository } from '../user.repository';
 import _ from 'lodash';
+import { UserRecord } from '../user.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class UserService {
-  constructor(private readonly userRepository: UserRepository) {}
+  constructor(
+    @InjectRepository(UserRecord)
+    private readonly userRepository: Repository<UserRecord>,
+  ) {}
 
   async register(data: CreateUserInputDto) {
     const user = await this.userRepository.save({
