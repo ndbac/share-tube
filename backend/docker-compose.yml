@@ -1,0 +1,34 @@
+version: "3.1"
+
+services:
+  db:
+    image: postgres:12.12-alpine
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+      POSTGRES_DB: $POSTGRES_DB
+      POSTGRES_USER: $POSTGRES_USER
+    ports:
+      - "5432:5432"
+
+  app:
+    build:
+      context: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    environment:
+      # PostgreSQL connection details
+      MAIN_POSTGRES_URL: postgres://sharetube:sharetube@db:5432/sharetube
+      MAIN_POSTGRES_DB_NAME: $POSTGRES_DB
+      MAIN_POSTGRES_SCHEMA: public
+      MAIN_POSTGRES_SYNC_ENABLED: true
+      MAIN_POSTGRES_LOGGING_ENABLED: true
+
+      # PostgreSQL migration details
+      MAIN_POSTGRES_HOST: localhost
+      MAIN_POSTGRES_PORT: 5432
+      MAIN_POSTGRES_DATABASE: $POSTGRES_DB
+      MAIN_POSTGRES_USERNAME: $POSTGRES_USER
+      MAIN_POSTGRES_PASSWORD: $POSTGRES_PASSWORD
