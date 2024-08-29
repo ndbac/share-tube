@@ -1,6 +1,10 @@
-import { Repository } from 'typeorm';
-import { ShareRecord } from './shares.entity';
+import { DataSource, Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
+import { ShareRecord } from './shares.entity';
 
 @Injectable()
-export class ShareRepository extends Repository<ShareRecord> {}
+export class ShareRepository extends Repository<ShareRecord> {
+  constructor(private readonly dataSource: DataSource) {
+    super(ShareRecord, dataSource.createEntityManager());
+  }
+}
