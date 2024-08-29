@@ -6,6 +6,7 @@ import config from 'config';
 import { generalValidationPipe } from './pipes/general-validation.pipe';
 import express from 'express';
 import { AppModule } from './modules/app.module';
+import { LoggerInterceptor } from './interceptors/logger.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -17,6 +18,8 @@ async function bootstrap() {
     exposedHeaders: config.get<string>('server.cors.exposedHeaders'),
   });
   app.useGlobalPipes(generalValidationPipe);
+  app.useGlobalInterceptors(new LoggerInterceptor());
+
   initializeSwaggerDoc(app);
 
   app.use(express.text({ type: 'text/plain' }));

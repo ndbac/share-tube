@@ -28,7 +28,6 @@ export class UserRecord {
 
   @Column({
     name: 'password',
-    length: 45,
   })
   password: string;
 

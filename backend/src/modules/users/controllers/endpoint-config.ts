@@ -9,6 +9,7 @@ import {
 export enum EUserOperation {
   LOGIN = 'userLogin',
   REGISTER = 'userRegister',
+  GET_PROFILE = 'userProfile',
 }
 
 export const USER_ENDPOINT_CONFIG: Record<
@@ -34,6 +35,16 @@ export const USER_ENDPOINT_CONFIG: Record<
     body: {
       type: CreateUserInputDto,
     },
+    responses: [
+      {
+        type: UserResponseDto,
+        status: HttpStatus.CREATED,
+      },
+    ],
+  },
+  [EUserOperation.GET_PROFILE]: {
+    operationId: EUserOperation.GET_PROFILE,
+    summary: 'User get profile',
     responses: [
       {
         type: UserResponseDto,

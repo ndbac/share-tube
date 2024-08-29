@@ -31,3 +31,11 @@ db:
     username: sharetube
     password: sharetube
 
+bcrypt:
+  saltRoundQuantity: 14
+
+jsonwebtoken:
+  secretKey: sample-jsonwebtoken-secret-key
+  expiresIn:  900 # 15 mins
+  subject: sharetube-application
+  audience: sharetube-user
