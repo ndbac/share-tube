@@ -1,6 +1,6 @@
 db:
   postgres:
-    url: postgres://zaapi:zaapiPGlocal@localhost:6432/zaapi-payment-test
+    url: postgres://postgres:test@localhost:5432/testdb
     synchronize: true
     dropSchema: true
     logging: true

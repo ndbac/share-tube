@@ -16,8 +16,8 @@ server:
 db:
   postgres:
     type: postgres
-    url: postgres://zaapi:zaapiPGlocal@localhost:6432/zaapi-payment
-    dbName: zaapi-payment
+    url: postgres://sharetube:sharetube@localhost:5432/sharetube
+    dbName: sharetube
     schema: public
     keepConnectionAlive: false
     synchronize: false
