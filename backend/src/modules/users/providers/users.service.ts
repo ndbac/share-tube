@@ -50,7 +50,7 @@ export class UserService {
       user.password,
       data.password,
     );
-    if (isMatchedPassword) {
+    if (!isMatchedPassword) {
       throw new ForbiddenException('Invalid email or password');
     }
 
