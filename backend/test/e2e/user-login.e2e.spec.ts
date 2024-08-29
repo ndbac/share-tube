@@ -31,7 +31,7 @@ describe('user login account e2e', () => {
 
   afterAll(async () => {
     await userRepository.delete({});
-    await app?.close();
+    await app.close();
   });
 
   describe('happy path', () => {

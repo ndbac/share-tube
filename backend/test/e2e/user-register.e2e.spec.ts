@@ -22,7 +22,7 @@ describe('user register account e2e', () => {
   });
 
   afterAll(async () => {
-    await app?.close();
+    await app.close();
   });
 
   describe('happy path', () => {

@@ -1,6 +1,6 @@
 db:
   postgres:
-    url: postgres://test:test@localhost:5432/test
+    url: postgres://test:test@localhost:6432/test
     synchronize: true
     dropSchema: true
     logging: true
