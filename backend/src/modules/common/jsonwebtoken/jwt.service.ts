@@ -28,7 +28,6 @@ export class JwtService {
       if (!options?.ignoreError)
         throw new BadRequestException({
           message: 'Invalid token',
-          sentryAlertDisabled: true,
         });
     }
   }
@@ -40,7 +39,6 @@ export class JwtService {
       if (!options?.ignoreError)
         throw new BadRequestException({
           message: 'Invalid token',
-          sentryAlertDisabled: true,
         });
     }
   }

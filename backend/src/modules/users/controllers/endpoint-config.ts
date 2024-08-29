@@ -2,7 +2,10 @@ import { HttpStatus } from '@nestjs/common';
 import { IEndpointConfiguration } from 'src/shared/types';
 import {
   CreateUserInputDto,
+  RefreshTokenInputDto,
+  UserCredentialsResponseDto,
   UserLoginInputDto,
+  UserProfileResponseDto,
   UserResponseDto,
 } from '../dto/users.dto';
 
@@ -10,6 +13,7 @@ export enum EUserOperation {
   LOGIN = 'userLogin',
   REGISTER = 'userRegister',
   GET_PROFILE = 'userProfile',
+  REFRESH_TOKEN = 'userRefreshToken',
 }
 
 export const USER_ENDPOINT_CONFIG: Record<
@@ -47,7 +51,20 @@ export const USER_ENDPOINT_CONFIG: Record<
     summary: 'User get profile',
     responses: [
       {
-        type: UserResponseDto,
+        type: UserProfileResponseDto,
+        status: HttpStatus.OK,
+      },
+    ],
+  },
+  [EUserOperation.REFRESH_TOKEN]: {
+    operationId: EUserOperation.REFRESH_TOKEN,
+    summary: 'User refresh token',
+    body: {
+      type: RefreshTokenInputDto,
+    },
+    responses: [
+      {
+        type: UserCredentialsResponseDto,
         status: HttpStatus.OK,
       },
     ],

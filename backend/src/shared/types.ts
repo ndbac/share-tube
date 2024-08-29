@@ -16,3 +16,9 @@ export interface IEndpointConfiguration {
   contentTypes?: string[];
   responses?: ApiResponseOptions[];
 }
+
+export interface IRequestWithUserCtx extends Request {
+  user: {
+    userId: string;
+  };
+}

@@ -45,6 +45,13 @@ export class CreateUserInputDto {
   password: string;
 }
 
+export class RefreshTokenInputDto {
+  @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
+  refreshToken: string;
+}
+
 export class UserCredentialsResponseDto {
   @ApiProperty()
   token: string;
@@ -62,4 +69,12 @@ export class UserResponseDto extends BaseDbResponseDto {
 
   @ApiProperty()
   credentials: UserCredentialsResponseDto;
+}
+
+export class UserProfileResponseDto extends BaseDbResponseDto {
+  @ApiProperty()
+  name: string;
+
+  @ApiProperty()
+  email: string;
 }
