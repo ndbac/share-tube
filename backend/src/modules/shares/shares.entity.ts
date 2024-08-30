@@ -15,9 +15,9 @@ export class ShareRecord {
   id: string;
 
   @Column({
-    name: 'url',
+    name: 'youtube_id',
   })
-  url: string;
+  youtubeId: string;
 
   @Column({
     name: 'title',
