@@ -22,3 +22,24 @@ export interface IRequestWithUserCtx extends Request {
     userId: string;
   };
 }
+
+export interface IPagination {
+  page: number;
+  pageSize: number;
+  offset: number;
+}
+
+export interface IPaginationOptions {
+  maxLimit?: number;
+}
+
+export interface IPaginationHeader {
+  'x-pagination-page': number;
+  'x-pagination-page-size': number;
+  'x-pagination-total': number;
+}
+
+export interface IPaginationResponse<T> {
+  items: T[];
+  headers: IPaginationHeader;
+}
