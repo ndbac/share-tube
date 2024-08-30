@@ -4,6 +4,7 @@ import { ShareInputDto } from '../dto/shares.dto';
 
 export enum EShareOperation {
   NEW_SHARE = 'userShareYoutubeVideo',
+  FILTER_SHARES = 'userFilterShares',
 }
 
 export const SHARE_ENDPOINT_CONFIG: Record<
@@ -16,6 +17,15 @@ export const SHARE_ENDPOINT_CONFIG: Record<
     body: {
       type: ShareInputDto,
     },
+    responses: [
+      {
+        status: HttpStatus.OK,
+      },
+    ],
+  },
+  [EShareOperation.FILTER_SHARES]: {
+    operationId: EShareOperation.FILTER_SHARES,
+    summary: 'User filters shares',
     responses: [
       {
         status: HttpStatus.OK,

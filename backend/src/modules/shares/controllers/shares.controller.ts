@@ -1,20 +1,34 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseInterceptors } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { EndpointConfig } from 'src/decorators/endpoint-config.decorator';
 import { EShareOperation, SHARE_ENDPOINT_CONFIG } from './endpoint-config';
 import { ShareService } from '../providers/shares.service';
 import { User } from 'src/decorators/user.decorator';
 import { ShareInputDto } from '../dto/shares.dto';
+import {
+  Pagination,
+  PaginationSwaggerQuery,
+} from 'src/decorators/pagination.decorator';
+import { PaginationInterceptor } from 'src/interceptors/pagination.interceptor';
+import { IPagination } from 'src/shared/types';
 
 @Controller('share')
 @ApiTags('user.share')
 export class ShareController {
   constructor(private readonly shareService: ShareService) {}
 
-  @Post('share')
+  @Post()
   @ApiBearerAuth()
   @EndpointConfig(SHARE_ENDPOINT_CONFIG[EShareOperation.NEW_SHARE])
-  login(@User('userId') userId: string, @Body() data: ShareInputDto) {
+  create(@User('userId') userId: string, @Body() data: ShareInputDto) {
     return this.shareService.newShare(userId, data);
+  }
+
+  @Get('filter')
+  @UseInterceptors(PaginationInterceptor)
+  @PaginationSwaggerQuery()
+  @EndpointConfig(SHARE_ENDPOINT_CONFIG[EShareOperation.FILTER_SHARES])
+  filters(@Pagination() pagination: IPagination) {
+    return this.shareService.filterShares(pagination);
   }
 }

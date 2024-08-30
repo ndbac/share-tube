@@ -2,6 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  Index,
   JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
@@ -10,6 +11,7 @@ import {
 import { UserRecord } from '../users/user.entity';
 
 @Entity('shares')
+@Index(['user', 'youtubeId'], { unique: true })
 export class ShareRecord {
   @PrimaryGeneratedColumn('increment')
   id: string;
