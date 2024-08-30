@@ -39,3 +39,7 @@ jsonwebtoken:
   expiresIn:  900 # 15 mins
   subject: sharetube-application
   audience: sharetube-user
+
+youtube:
+  baseUrl: https://youtube.com
+  apiKey: sample-secret-key
