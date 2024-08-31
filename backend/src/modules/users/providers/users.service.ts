@@ -93,15 +93,12 @@ export class UserService {
       userId: user.id,
     });
     const newRefreshToken = generateRandomString(REFRESH_TOKEN_LENGTH);
-    const hashedRefreshToken = await this.encryptService.hash(refreshToken);
+    const hashedRefreshToken = await this.encryptService.hash(newRefreshToken);
     await this.userRepository.update(user.id, {
       refreshToken: hashedRefreshToken,
     });
 
-    return {
-      ..._.omit(user, ['password', 'refreshToken']),
-      credential: { token, refreshToken: newRefreshToken },
-    };
+    return { token, refreshToken: newRefreshToken };
   }
 
   private async isAbleToRegisterAccount(data: CreateUserInputDto) {
