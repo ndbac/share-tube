@@ -52,7 +52,7 @@ export class RefreshTokenInputDto {
   refreshToken: string;
 }
 
-export class UserCredentialsResponseDto {
+export class UserCredentialResponseDto {
   @ApiProperty()
   token: string;
 
@@ -68,7 +68,7 @@ export class UserResponseDto extends BaseDbResponseDto {
   email: string;
 
   @ApiProperty()
-  credentials: UserCredentialsResponseDto;
+  credential: UserCredentialResponseDto;
 }
 
 export class UserProfileResponseDto extends BaseDbResponseDto {

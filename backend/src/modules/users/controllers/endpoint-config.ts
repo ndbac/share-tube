@@ -3,7 +3,7 @@ import { IEndpointConfiguration } from 'src/shared/types';
 import {
   CreateUserInputDto,
   RefreshTokenInputDto,
-  UserCredentialsResponseDto,
+  UserCredentialResponseDto,
   UserLoginInputDto,
   UserProfileResponseDto,
   UserResponseDto,
@@ -64,7 +64,7 @@ export const USER_ENDPOINT_CONFIG: Record<
     },
     responses: [
       {
-        type: UserCredentialsResponseDto,
+        type: UserCredentialResponseDto,
         status: HttpStatus.OK,
       },
     ],
