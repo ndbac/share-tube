@@ -5,10 +5,17 @@ import {
   WebSocketGateway,
   WebSocketServer,
   OnGatewayInit,
+  WsResponse,
 } from '@nestjs/websockets';
+import { Observable, from, map } from 'rxjs';
 import { Socket, Server } from 'socket.io';
+import { EWebsocketEventType, IOnNewShareEventPayload } from './types';
 
-@WebSocketGateway()
+@WebSocketGateway({
+  cors: {
+    origin: '*',
+  },
+})
 export class WebsocketGateway
   implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
 {
@@ -27,8 +34,16 @@ export class WebsocketGateway
     console.log({ socketId: socket.id }, 'Socket disconnected');
   }
 
-  @SubscribeMessage('shares')
-  onNewShare(socket: Socket) {
-    console.log({ socketId: socket.id }, 'Socket received new share');
+  @SubscribeMessage('ping')
+  ping(): Observable<WsResponse<number>> {
+    return from([1, 2, 3]).pipe(map((item) => ({ event: 'pong', data: item })));
+  }
+
+  sendVideoSharedEvent(payload: IOnNewShareEventPayload) {
+    this.sendEvent(EWebsocketEventType.ON_NEW_SHARE, payload);
+  }
+
+  private sendEvent(eventType: EWebsocketEventType, payload: any) {
+    this.server.emit(eventType, payload);
   }
 }

@@ -1,4 +1,8 @@
 export interface IYoutubeVideoMetadata {
-  title: string;
-  description: string;
+  items: {
+    snippet: {
+      title: string;
+      description: string;
+    };
+  }[];
 }

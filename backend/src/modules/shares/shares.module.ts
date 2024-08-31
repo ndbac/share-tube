@@ -12,6 +12,7 @@ import { ShareController } from './controllers/shares.controller';
 import { ShareService } from './providers/shares.service';
 import { UserRecord } from '../users/user.entity';
 import { YoutubeModule } from 'src/adapters/youtube/youtube.module';
+import { WebsocketModule } from 'src/adapters/websocket/websocket.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { YoutubeModule } from 'src/adapters/youtube/youtube.module';
     TypeOrmModule.forFeature([UserRecord]),
     CommonModule,
     YoutubeModule,
+    WebsocketModule,
   ],
   controllers: [ShareController],
   providers: [ShareService],

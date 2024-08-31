@@ -27,6 +27,8 @@ export class UserMiddleware implements NestMiddleware {
       });
       req['user'] = {
         userId: account.id,
+        name: account.name,
+        email: account.email,
       };
     }
 

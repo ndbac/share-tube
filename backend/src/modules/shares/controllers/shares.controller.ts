@@ -10,7 +10,7 @@ import {
   PaginationSwaggerQuery,
 } from 'src/decorators/pagination.decorator';
 import { PaginationInterceptor } from 'src/interceptors/pagination.interceptor';
-import { IPagination } from 'src/shared/types';
+import { IIamUser, IPagination } from 'src/shared/types';
 
 @Controller('share')
 @ApiTags('user.share')
@@ -20,8 +20,8 @@ export class ShareController {
   @Post()
   @ApiBearerAuth()
   @EndpointConfig(SHARE_ENDPOINT_CONFIG[EShareOperation.NEW_SHARE])
-  create(@User('userId') userId: string, @Body() data: ShareInputDto) {
-    return this.shareService.newShare(userId, data);
+  create(@User() user: IIamUser, @Body() data: ShareInputDto) {
+    return this.shareService.newShare(user, data);
   }
 
   @Get('filter')

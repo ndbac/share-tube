@@ -41,5 +41,5 @@ jsonwebtoken:
   audience: sharetube-user
 
 youtube:
-  baseUrl: https://youtube.com
+  baseUrl: https://www.googleapis.com/youtube/v3/
   apiKey: sample-secret-key

@@ -17,10 +17,14 @@ export interface IEndpointConfiguration {
   responses?: ApiResponseOptions[];
 }
 
+export interface IIamUser {
+  userId: string;
+  email: string;
+  name: string;
+}
+
 export interface IRequestWithUserCtx extends Request {
-  user: {
-    userId: string;
-  };
+  user: IIamUser;
 }
 
 export interface IPagination {
