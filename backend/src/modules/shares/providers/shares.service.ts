@@ -8,6 +8,7 @@ import { IIamUser, IPagination } from 'src/shared/types';
 import { getPaginationHeaders } from 'src/shared/pagination.helpers';
 import { WebsocketGateway } from 'src/adapters/websocket/websocket.gateway';
 import _ from 'lodash';
+import { UserRecord } from 'src/modules/users/user.entity';
 
 @Injectable()
 export class ShareService {
@@ -28,7 +29,10 @@ export class ShareService {
     });
 
     return {
-      items: shares,
+      items: shares.map((share) => ({
+        ...share,
+        user: this.maskUserSensitiveData(share.user),
+      })),
       headers: getPaginationHeaders(pagination, count),
     };
   }
@@ -95,5 +99,9 @@ export class ShareService {
     }
 
     return match[1];
+  }
+
+  private maskUserSensitiveData(user: UserRecord) {
+    return _.omit(user, ['refreshToken', 'password', 'createdAt', 'updatedAt']);
   }
 }

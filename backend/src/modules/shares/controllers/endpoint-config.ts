@@ -1,6 +1,10 @@
 import { HttpStatus } from '@nestjs/common';
 import { IEndpointConfiguration } from 'src/shared/types';
-import { ShareInputDto } from '../dto/shares.dto';
+import {
+  ShareInputDto,
+  ShareReponseDto,
+  ShareResponseWithUserDto,
+} from '../dto/shares.dto';
 
 export enum EShareOperation {
   NEW_SHARE = 'userShareYoutubeVideo',
@@ -19,6 +23,7 @@ export const SHARE_ENDPOINT_CONFIG: Record<
     },
     responses: [
       {
+        type: ShareReponseDto,
         status: HttpStatus.OK,
       },
     ],
@@ -28,6 +33,7 @@ export const SHARE_ENDPOINT_CONFIG: Record<
     summary: 'User filters shares',
     responses: [
       {
+        type: [ShareResponseWithUserDto],
         status: HttpStatus.OK,
       },
     ],
