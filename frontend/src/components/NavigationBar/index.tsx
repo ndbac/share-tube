@@ -15,7 +15,7 @@ export default function NavigationBar() {
         <div>
           {isLoggedIn ? (
             <>
-              <Link href="/share" className="text-white mr-4">
+              <Link href="/share-video" className="text-white mr-4">
                 Share Video
               </Link>
               <button

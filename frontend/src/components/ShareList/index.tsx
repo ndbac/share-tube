@@ -16,7 +16,7 @@ const ShareList = () => {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-screen-lg mx-auto">
-        <h2 className="text-2xl font-bold mb-6 text-center">Shared Videos</h2>
+        <h2 className="text-2xl font-bold mb-6 text-center">What's new?</h2>
         {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
         {loading ? (
           <p>Loading...</p>

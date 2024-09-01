@@ -37,7 +37,6 @@ const useVideoListWithPagination = (initialPageSize: number): UseVideoListWithPa
         setVideos(result.data);
         setPagination(result.pagination);
       } catch (error) {
-        console.error('Error fetching shared videos:', error);
         setError('Failed to fetch videos. Please try again.');
       } finally {
         setLoading(false);
