@@ -26,6 +26,9 @@ export class ShareService {
       relations: {
         user: true,
       },
+      order: {
+        createdAt: 'DESC',
+      },
     });
 
     return {

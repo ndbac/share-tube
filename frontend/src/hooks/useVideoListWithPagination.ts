@@ -7,7 +7,7 @@ interface Pagination {
   total: number;
 }
 
-interface UseVideosWithPaginationResult {
+interface UseVideoListWithPaginationResult {
   videos: any[];
   pagination: Pagination;
   loading: boolean;
@@ -16,7 +16,7 @@ interface UseVideosWithPaginationResult {
   handlePreviousPage: () => void;
 }
 
-const useVideosWithPagination = (initialPageSize: number): UseVideosWithPaginationResult => {
+const useVideoListWithPagination = (initialPageSize: number): UseVideoListWithPaginationResult => {
   const [videos, setVideos] = useState<any[]>([]);
   const [page, setPage] = useState(1);
   const [pageSize] = useState(initialPageSize);
@@ -67,4 +67,4 @@ const useVideosWithPagination = (initialPageSize: number): UseVideosWithPaginati
   };
 };
 
-export default useVideosWithPagination;
+export default useVideoListWithPagination;

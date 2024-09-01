@@ -1,6 +1,6 @@
 "use client";
 
-import useVideosWithPagination from "@/hooks/useVideosWithPagination";
+import useVideoListWithPagination from "@/hooks/useVideoListWithPagination";
 import ShareCard from "@/components/ShareCard";
 
 const ShareList = () => {
@@ -11,7 +11,7 @@ const ShareList = () => {
     error,
     handleNextPage,
     handlePreviousPage,
-  } = useVideosWithPagination(10);
+  } = useVideoListWithPagination(5);
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">

@@ -1,11 +1,14 @@
-"use client";
+"use client"
 
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { shareVideo } from '@/services/axiosService';
+import { useRouter } from 'next/navigation';
 
 const schema = yup.object().shape({
-  youtubeUrl: yup.string().url('Invalid URL format').required('YouTube URL is required'),
+  youtubeUrl: yup.string().url('Invalid URL').required('YouTube URL is required'),
 });
 
 export default function Share() {
@@ -13,8 +16,28 @@ export default function Share() {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (data: any) => {
-    console.log(data);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
+  const router = useRouter();
+
+  const onSubmit = async (data: any) => {
+    setLoading(true);
+    setError(null);
+    setSuccess(null);
+
+    try {
+      await shareVideo(data.youtubeUrl);
+      setSuccess('Video shared successfully!');
+      setTimeout(() => {
+        router.push('/');
+      }, 1000);
+    } catch (error) {
+      console.error('Error sharing video:', error);
+      setError('Failed to share video. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -31,11 +54,14 @@ export default function Share() {
             />
             {errors.youtubeUrl && <p className="text-red-500 text-sm">{errors.youtubeUrl.message}</p>}
           </div>
+          {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
+          {success && <p className="text-green-500 text-sm mb-4">{success}</p>}
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-200"
+            className={`w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-200 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+            disabled={loading}
           >
-            Share
+            {loading ? 'Sharing...' : 'Share'}
           </button>
         </form>
       </div>
