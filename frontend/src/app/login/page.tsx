@@ -4,8 +4,8 @@ import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { useAuthContext } from '@/context/AuthContext';
 
-// Define validation schema
 const schema = yup.object().shape({
   email: yup.string().email('Invalid email format').required('Email is required'),
   password: yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
@@ -15,10 +15,14 @@ export default function Login() {
   const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(schema),
   });
+  const { login } = useAuthContext();
 
-  const onSubmit = (data: any) => {
-    console.log(data);
-    // Handle form submission
+  const onSubmit = async (data: any) => {
+    try {
+      login();
+    } catch (error) {
+      console.error('Error logging in user:', error);
+    }
   };
 
   return (

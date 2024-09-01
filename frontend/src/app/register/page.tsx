@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { useAuthContext } from '@/context/AuthContext';
 
 const schema = yup.object().shape({
   name: yup.string().required('Name is required'),
@@ -15,9 +16,14 @@ export default function Register() {
   const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(schema),
   });
+  const { login } = useAuthContext();
 
-  const onSubmit = (data: any) => {
-    console.log(data);
+  const onSubmit = async (data: any) => {
+    try {
+      login();
+    } catch (error) {
+      console.error('Error registering user:', error);
+    }
   };
 
   return (

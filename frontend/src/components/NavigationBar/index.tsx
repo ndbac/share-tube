@@ -1,14 +1,10 @@
 "use client"
 
-import { useState } from 'react';
 import Link from 'next/link';
+import { useAuthContext } from '@/context/AuthContext';
 
 export default function NavigationBar() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-  };
+  const { isLoggedIn, logout } = useAuthContext();
 
   return (
     <nav className="bg-gray-800 p-4">
@@ -23,7 +19,7 @@ export default function NavigationBar() {
                 Share Video
               </Link>
               <button
-                onClick={handleLogout}
+                onClick={logout}
                 className="text-white bg-red-500 px-3 py-1 rounded"
               >
                 Logout

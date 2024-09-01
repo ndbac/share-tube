@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "../assets/globals.css";
 import NavigationBar from "@/components/NavigationBar";
+import { AuthProvider } from "@/context/AuthContext";
+import { VideoProvider } from "@/context/VideoContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,8 +20,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <NavigationBar />
-        {children}
+        <AuthProvider>
+          <VideoProvider>
+            <NavigationBar />
+            {children}
+          </VideoProvider>
+        </AuthProvider>
       </body>
     </html>
   );
