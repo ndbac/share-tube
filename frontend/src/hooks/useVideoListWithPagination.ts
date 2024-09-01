@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { fetchSharedVideos } from '@/services/axiosService';
+import { IVideoShare } from '@/types';
 
 interface Pagination {
   page: number;
@@ -8,7 +9,7 @@ interface Pagination {
 }
 
 interface UseVideoListWithPaginationResult {
-  videos: any[];
+  videos: IVideoShare[];
   pagination: Pagination;
   loading: boolean;
   error: string | null;
@@ -17,7 +18,7 @@ interface UseVideoListWithPaginationResult {
 }
 
 const useVideoListWithPagination = (initialPageSize: number): UseVideoListWithPaginationResult => {
-  const [videos, setVideos] = useState<any[]>([]);
+  const [videos, setVideos] = useState<IVideoShare[]>([]);
   const [page, setPage] = useState(1);
   const [pageSize] = useState(initialPageSize);
   const [loading, setLoading] = useState(false);

@@ -1,3 +1,4 @@
+import { IVideoShare } from '@/types';
 import axios from 'axios';
 
 const axiosInstance = axios.create({
@@ -53,7 +54,7 @@ export const refreshToken = async (refreshToken: string) => {
 };
 
 export const fetchSharedVideos = async (page: number, pageSize: number) => {
-  const response = await axiosInstance.get('/share/filter', {
+  const response = await axiosInstance.get<IVideoShare[]>('/share/filter', {
     params: {
       page,
       pageSize,

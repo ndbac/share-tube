@@ -1,17 +1,8 @@
+import { IVideoShare } from '@/types';
 import React from 'react';
 
 interface ShareCardProps {
-  video: {
-    id: number;
-    youtubeId: string;
-    title: string;
-    description: string;
-    createdAt: string;
-    user: {
-      name: string;
-      email: string;
-    };
-  };
+  video: IVideoShare;
 }
 
 const ShareCard: React.FC<ShareCardProps> = ({ video }) => {
