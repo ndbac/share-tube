@@ -12,5 +12,5 @@ RUN yarn install --frozen-lockfile
 RUN yarn build
 RUN rm -rf node_modules && yarn
 
-EXPOSE 3000
+EXPOSE 3001
 CMD yarn run start:dev
