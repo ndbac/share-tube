@@ -1,36 +1,57 @@
 import React from 'react';
 
 interface ShareCardProps {
-  videoId: string;
-  title: string;
-  description: string;
-  sharedBy: string;
+  video: {
+    id: number;
+    youtubeId: string;
+    title: string;
+    description: string;
+    createdAt: string;
+    user: {
+      name: string;
+      email: string;
+    };
+  };
 }
 
-const ShareCard: React.FC<ShareCardProps> = ({ videoId, title, description, sharedBy }) => {
-  const truncatedDescription = description.length > 300 ? description.substring(0, 300) + '...' : description;
+const ShareCard: React.FC<ShareCardProps> = ({ video }) => {
+  const truncateDescription = (description: string, maxLength: number) => {
+    if (description.length <= maxLength) {
+      return description;
+    }
+    return description.slice(0, maxLength) + '...';
+  };
+
+  const getYouTubeEmbedUrl = (videoId: string) => {
+    return `https://www.youtube.com/embed/${videoId}`;
+  };
+
+  const getYouTubeUrl = (videoId: string) => {
+    return `https://www.youtube.com/watch?v=${videoId}`;
+  };
 
   return (
-    <div className="flex bg-white shadow-md rounded-lg overflow-hidden">
-      <div className="w-1/2">
-        <iframe
-          width="100%"
-          height="315"
-          src={`https://www.youtube.com/embed/${videoId}`}
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-        ></iframe>
-      </div>
-      <div className="w-1/2 p-4">
-        <h2 className="text-xl font-bold mb-2">
-          <a href={`https://www.youtube.com/watch?v=${videoId}`} target="_blank" rel="noopener noreferrer">
-            {title}
-          </a>
-        </h2>
-        <p className="text-gray-700 mb-4">{truncatedDescription}</p>
-        <p className="text-gray-500">Shared by: {sharedBy}</p>
-      </div>
+    <div className="border rounded-lg p-4 mb-4 shadow-md w-full max-w-screen-lg mx-auto">
+      <a
+        href={getYouTubeUrl(video.youtubeId)}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-xl font-bold text-blue-500 hover:underline"
+      >
+        {video.title}
+      </a>
+      <iframe
+        width="100%"
+        height="315"
+        src={getYouTubeEmbedUrl(video.youtubeId)}
+        title={video.title}
+        frameBorder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+      ></iframe>
+      <p className="text-gray-700 pt-4">{truncateDescription(video.description, 300)}</p>
+      <p className="text-gray-500 text-sm pt-4">Shared by: {video.user.name} ({video.user.email})</p>
+      <p className="text-gray-500 text-sm">Shared at: {new Date(video.createdAt).toLocaleString()}</p>
     </div>
   );
 };

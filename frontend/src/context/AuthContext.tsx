@@ -1,10 +1,13 @@
 "use client"
 
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import { useRouter } from 'next/navigation';
+import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 
 interface AuthContextType {
   isLoggedIn: boolean;
-  login: () => void;
+  token: string | null;
+  refreshToken: string | null;
+  login: (token: string, refreshToken: string) => void;
   logout: () => void;
 }
 
@@ -12,12 +15,39 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [token, setToken] = useState<string | null>(null);
+  const [refreshToken, setRefreshToken] = useState<string | null>(null);
+  const router = useRouter();
 
-  const login = () => setIsLoggedIn(true);
-  const logout = () => setIsLoggedIn(false);
+  useEffect(() => {
+    const savedToken = localStorage.getItem('token');
+    const savedRefreshToken = localStorage.getItem('refreshToken');
+    if (savedToken && savedRefreshToken) {
+      setIsLoggedIn(true);
+      setToken(savedToken);
+      setRefreshToken(savedRefreshToken);
+    }
+  }, []);
+
+  const login = (token: string, refreshToken: string) => {
+    setIsLoggedIn(true);
+    setToken(token);
+    setRefreshToken(refreshToken);
+    localStorage.setItem('token', token);
+    localStorage.setItem('refreshToken', refreshToken);
+  };
+
+  const logout = () => {
+    setIsLoggedIn(false);
+    setToken(null);
+    setRefreshToken(null);
+    router.push('/');
+    localStorage.removeItem('token');
+    localStorage.removeItem('refreshToken');
+  };
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, login, logout }}>
+    <AuthContext.Provider value={{ isLoggedIn, token, refreshToken, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
