@@ -30,10 +30,8 @@ export default function Login() {
       const response = await loginUser(data.email, data.password);
       const { credential: { token, refreshToken } } = response;
       login(token, refreshToken);
-      console.log('User logged in successfully:', response);
       router.push('/');
     } catch (error) {
-      console.error('Error logging in user:', error);
       setError('Failed to log in. Please check your credentials and try again.');
     } finally {
       setLoading(false);

@@ -13,6 +13,9 @@ const schema = yup.object().shape({
   name: yup.string().required('Name is required'),
   email: yup.string().email('Invalid email format').required('Email is required'),
   password: yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
+  confirmPassword: yup.string()
+    .oneOf([yup.ref('password')], 'Passwords must match')
+    .required('Confirm Password is required'),
 });
 
 export default function Register() {
@@ -31,7 +34,6 @@ export default function Register() {
       const response = await registerUser(data.name, data.email, data.password);
       const { credential: { token, refreshToken } } = response;
       login(token, refreshToken);
-      console.log('User registered successfully:', response);
       router.push('/');
     } catch (error) {
       console.error('Error registering user:', error);
@@ -45,7 +47,6 @@ export default function Register() {
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
         <h2 className="text-2xl font-bold mb-6 text-center">Register</h2>
-        {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-4">
             <label className="block text-gray-700">Name</label>
@@ -53,7 +54,6 @@ export default function Register() {
               type="text"
               {...register('name')}
               className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300"
-              disabled={loading}
             />
             {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
           </div>
@@ -63,33 +63,38 @@ export default function Register() {
               type="email"
               {...register('email')}
               className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300"
-              disabled={loading}
             />
             {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
           </div>
-          <div className="mb-6">
+          <div className="mb-4">
             <label className="block text-gray-700">Password</label>
             <input
               type="password"
               {...register('password')}
               className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300"
-              disabled={loading}
             />
             {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
           </div>
+          <div className="mb-4">
+            <label className="block text-gray-700">Confirm Password</label>
+            <input
+              type="password"
+              {...register('confirmPassword')}
+              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300"
+            />
+            {errors.confirmPassword && <p className="text-red-500 text-sm">{errors.confirmPassword.message}</p>}
+          </div>
+          {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-200"
+            className={`w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-200 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
             disabled={loading}
           >
             {loading ? 'Registering...' : 'Register'}
           </button>
         </form>
         <p className="mt-4 text-center">
-          Already have an account?{' '}
-          <Link href="/login" className="text-blue-500 hover:underline">
-            Login
-          </Link>
+          Already have an account? <Link href="/login" className="text-blue-500 hover:underline">Login</Link>
         </p>
       </div>
     </div>

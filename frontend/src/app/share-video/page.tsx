@@ -33,7 +33,6 @@ export default function Share() {
         router.push('/');
       }, 1000);
     } catch (error) {
-      console.error('Error sharing video:', error);
       setError('Failed to share video. Please try again.');
     } finally {
       setLoading(false);
