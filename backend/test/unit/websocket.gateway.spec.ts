@@ -72,11 +72,14 @@ describe('WebsocketGateway', () => {
   it('should emit video shared event', () => {
     const payload: IOnNewShareEventPayload = {
       id: 'share123',
+      youtubeId: 'youtubeId',
       title: 'Sample Video',
       description: 'This is a sample video description',
-      sharedBy: {
+      createdAt: '2024-09-02T01:22:29.696Z',
+      user: {
         name: 'John Doe',
         userId: 'user123',
+        email: 'test@gmail.com',
       },
     };
     gateway.sendVideoSharedEvent(payload);

@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useAuthContext } from '@/context/AuthContext';
 
 export default function NavigationBar() {
-  const { isLoggedIn, logout } = useAuthContext();
+  const { isAuthenticated, logout } = useAuthContext();
 
   return (
     <nav className="bg-gray-800 p-4">
@@ -13,7 +13,7 @@ export default function NavigationBar() {
           <Link href="/">ShareTube</Link>
         </div>
         <div>
-          {isLoggedIn ? (
+          {isAuthenticated ? (
             <>
               <Link href="/share-video" className="text-white mr-4">
                 Share Video

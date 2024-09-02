@@ -4,10 +4,13 @@ export enum EWebsocketEventType {
 
 export interface IOnNewShareEventPayload {
   id: string;
+  youtubeId: string;
   title: string;
   description: string;
-  sharedBy: {
+  createdAt: string;
+  user: {
     name: string;
+    email: string;
     userId: string;
   };
 }

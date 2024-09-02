@@ -65,9 +65,12 @@ export class ShareService {
       id: share.id,
       title: share.title,
       description: share.description,
-      sharedBy: {
+      youtubeId: share.userId,
+      createdAt: share.createdAt.toISOString(),
+      user: {
         userId: user.userId,
         name: user.name,
+        email: user.email,
       },
     });
 

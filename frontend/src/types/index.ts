@@ -1,5 +1,5 @@
 export interface IVideoShare {
-  id: number;
+  id: string;
   youtubeId: string;
   title: string;
   description: string;
@@ -7,5 +7,12 @@ export interface IVideoShare {
   user: {
     name: string;
     email: string;
+    userId: string;
   };
 }
+
+export enum EWebsocketEventType {
+  ON_NEW_SHARE = 'onNewShare',
+}
+
+export interface IOnNewShareEventPayload extends IVideoShare {}

@@ -1,53 +1,37 @@
 "use client"
 
-import { useRouter } from 'next/navigation';
-import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 
 interface AuthContextType {
-  isLoggedIn: boolean;
-  token: string | null;
-  refreshToken: string | null;
+  isAuthenticated: boolean;
   login: (token: string, refreshToken: string) => void;
   logout: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [token, setToken] = useState<string | null>(null);
-  const [refreshToken, setRefreshToken] = useState<string | null>(null);
-  const router = useRouter();
+export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    const savedToken = localStorage.getItem('token');
-    const savedRefreshToken = localStorage.getItem('refreshToken');
-    if (savedToken && savedRefreshToken) {
-      setIsLoggedIn(true);
-      setToken(savedToken);
-      setRefreshToken(savedRefreshToken);
-    }
+    const token = localStorage.getItem('token');
+    setIsAuthenticated(!!token);
   }, []);
 
   const login = (token: string, refreshToken: string) => {
-    setIsLoggedIn(true);
-    setToken(token);
-    setRefreshToken(refreshToken);
     localStorage.setItem('token', token);
     localStorage.setItem('refreshToken', refreshToken);
+    setIsAuthenticated(true);
   };
 
   const logout = () => {
-    setIsLoggedIn(false);
-    setToken(null);
-    setRefreshToken(null);
-    router.push('/');
     localStorage.removeItem('token');
     localStorage.removeItem('refreshToken');
+    setIsAuthenticated(false);
   };
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, token, refreshToken, login, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
