@@ -28,6 +28,7 @@ export class JwtService {
       if (!options?.ignoreError)
         throw new BadRequestException({
           message: 'Invalid token',
+          errorCode: 'InvalidToken',
         });
     }
   }
