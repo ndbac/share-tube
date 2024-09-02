@@ -1,16 +1,18 @@
-import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "../assets/globals.css";
 import NavigationBar from "@/components/NavigationBar";
 import { AuthProvider } from "@/context/AuthContext";
 import { VideoProvider } from "@/context/VideoContext";
-
-const inter = Inter({ subsets: ["latin"] });
+import { Metadata } from "next";
+import NotificationProvider from "./notification";
 
 export const metadata: Metadata = {
   title: "ShareTube",
-  description: "Share your favourite YouTube videos with friends within a click!",
+  description:
+    "Share your favourite YouTube videos with friends within a click!",
 };
+
+const inter = Inter({ subsets: ["latin"] });
 
 export default function RootLayout({
   children,
@@ -20,12 +22,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <AuthProvider>
-          <VideoProvider>
-            <NavigationBar />
-            {children}
-          </VideoProvider>
-        </AuthProvider>
+        <NotificationProvider>
+          <AuthProvider>
+            <VideoProvider>
+              <NavigationBar />
+              {children}
+            </VideoProvider>
+          </AuthProvider>
+        </NotificationProvider>
       </body>
     </html>
   );

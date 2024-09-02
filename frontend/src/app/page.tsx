@@ -6,40 +6,32 @@ import { useAuthContext } from "@/context/AuthContext";
 import { socketService } from "@/services/socketService";
 import { IOnNewShareEventPayload } from "@/types";
 import { useVideoContext } from "@/context/VideoContext";
+import { useSnackbar } from "notistack";
 
 export default function Home() {
   const { isAuthenticated } = useAuthContext();
   const { resetPagination } = useVideoContext();
-  const [newVideo, setNewVideo] = useState<IOnNewShareEventPayload | null>(null);
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     if (isAuthenticated) {
       socketService.connect();
 
       socketService.onNewShare((payload: IOnNewShareEventPayload) => {
-        setNewVideo(payload);
+        enqueueSnackbar(`${payload.user.name} just shared a new video!`, {
+          variant: "info",
+          action: <button onClick={resetPagination}>View</button> 
+        });
       });
 
       return () => {
         socketService.disconnect();
       };
     }
-  }, [isAuthenticated]);
-
-  const handlePopupClick = () => {
-    if (newVideo) {
-      setNewVideo(null);
-      resetPagination();
-    }
-  };
+  }, [enqueueSnackbar, isAuthenticated, resetPagination]);
 
   return (
     <main>
-      {newVideo && (
-        <div className="popup" onClick={handlePopupClick}>
-          New video shared! Click to view.
-        </div>
-      )}
       <ShareList />
     </main>
   );

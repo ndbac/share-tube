@@ -23,7 +23,6 @@ interface VideoContextType {
   pagination: Pagination;
   loading: boolean;
   error: string | null;
-  addVideos: (videos: IVideoShare[]) => void;
   loadMoreVideos: () => void;
   resetPagination: () => void;
 }
@@ -54,10 +53,6 @@ export const VideoProvider = ({ children }: { children: ReactNode }) => {
     }
   }, []);
 
-  const addVideos = useCallback((newVideos: IVideoShare[]) => {
-    setVideos((prevVideos) => [...prevVideos, ...newVideos]);
-  }, []);
-
   const resetPagination = useCallback(() => {
     setVideos([]);
     setPagination({ page: 1, pageSize: 5, total: 0 });
@@ -83,7 +78,6 @@ export const VideoProvider = ({ children }: { children: ReactNode }) => {
         pagination,
         loading,
         error,
-        addVideos,
         loadMoreVideos,
         resetPagination,
       }}
