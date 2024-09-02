@@ -36,7 +36,6 @@ const ShareCard: React.FC<ShareCardProps> = ({ video }) => {
         height="315"
         src={getYouTubeEmbedUrl(video.youtubeId)}
         title={video.title}
-        frameBorder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen
       ></iframe>

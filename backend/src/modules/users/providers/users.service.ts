@@ -51,7 +51,9 @@ export class UserService {
       user.password,
     );
     if (!isMatchedPassword) {
-      throw new ForbiddenException('Invalid email or password');
+      throw new ForbiddenException(
+        'Email or password is incorrect, please try again',
+      );
     }
 
     const token = this.jwtService.signToken({

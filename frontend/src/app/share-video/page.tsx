@@ -9,6 +9,8 @@ import { useRouter } from "next/navigation";
 import { useVideoContext } from "@/context/VideoContext";
 import ProtectedRoute from "../protectedRoutes";
 import { schema, FormData } from "./schema";
+import { isAxiosError } from "axios";
+import { DEFAULT_ERROR_MESSAGE } from "@/types/constants";
 
 export default function Share() {
   const {
@@ -38,7 +40,11 @@ export default function Share() {
         router.push("/");
       }, 1000);
     } catch (error) {
-      setError("Failed to share video. Please try again.");
+      if (isAxiosError(error)) {
+        setError(error.response?.data?.message || DEFAULT_ERROR_MESSAGE);
+      } else {
+        setError(DEFAULT_ERROR_MESSAGE);
+      }
     } finally {
       setLoading(false);
     }

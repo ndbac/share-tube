@@ -11,6 +11,8 @@ import React, {
   useMemo,
 } from "react";
 import { fetchSharedVideos } from "@/services/axiosService";
+import { isAxiosError } from "axios";
+import { DEFAULT_ERROR_MESSAGE } from "@/types/constants";
 
 interface Pagination {
   page: number;
@@ -47,7 +49,12 @@ export const VideoProvider = ({ children }: { children: ReactNode }) => {
       setVideos((prev) => [...prev, ...result.data]);
       setPagination(result.pagination);
     } catch (error) {
-      setError("Failed to fetch videos. Please try again.");
+
+      if (isAxiosError(error)) {
+        setError(error.response?.data?.message || DEFAULT_ERROR_MESSAGE);
+      } else {
+        setError(DEFAULT_ERROR_MESSAGE);
+      }
     } finally {
       setLoading(false);
     }
