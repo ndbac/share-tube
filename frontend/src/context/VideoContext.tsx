@@ -1,30 +1,35 @@
 "use client"
 
-import React, { createContext, useContext, useState, ReactNode } from 'react';
-
-interface Video {
-  videoId: string;
-  title: string;
-  description: string;
-  sharedBy: string;
-}
+import { IVideoShare } from '@/types';
+import React, { createContext, useContext, useState, ReactNode, useCallback } from 'react';
 
 interface VideoContextType {
-  videos: Video[];
-  addVideo: (video: Video) => void;
+  videos: IVideoShare[];
+  addVideos: (videos: IVideoShare[]) => void;
+  reset: () => void;
 }
 
 const VideoContext = createContext<VideoContextType | undefined>(undefined);
 
 export const VideoProvider = ({ children }: { children: ReactNode }) => {
-  const [videos, setVideos] = useState<Video[]>([]);
+  const [videos, setVideos] = useState<IVideoShare[]>([]);
 
-  const addVideo = (video: Video) => {
-    setVideos((prevVideos) => [...prevVideos, video]);
-  };
+  const addVideos = useCallback((newVideos: IVideoShare[]) => {
+    setVideos((prevVideos) => {
+      const videoMap = new Map(prevVideos.map(video => [video.id, video]));
+      newVideos.forEach(video => {
+        videoMap.set(video.id, video);
+      });
+      return Array.from(videoMap.values());
+    });
+  }, []);
+
+  const reset = useCallback(() => {
+    setVideos([]);
+  }, []);
 
   return (
-    <VideoContext.Provider value={{ videos, addVideo }}>
+    <VideoContext.Provider value={{ videos, addVideos, reset }}>
       {children}
     </VideoContext.Provider>
   );

@@ -1,18 +1,23 @@
 "use client";
 
-import useVideoListWithPagination from "@/hooks/useVideoListWithPagination";
+import useVideoListWithPagination, {
+  UseVideoListWithPaginationResult,
+} from "@/hooks/useVideoListWithPagination";
 import ShareCard from "@/components/ShareCard";
+import { IVideoShare } from "@/types";
 
-const ShareList = () => {
-  const {
+const ShareList = ({
+  videoWithPagination: {
     videos,
     pagination,
     loading,
     error,
     handleNextPage,
     handlePreviousPage,
-  } = useVideoListWithPagination(5);
-
+  },
+}: {
+  videoWithPagination: UseVideoListWithPaginationResult;
+}) => {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-screen-lg mx-auto">
@@ -22,7 +27,7 @@ const ShareList = () => {
           <p>Loading...</p>
         ) : (
           <ul className="w-full">
-            {videos.map((video: any) => (
+            {videos.map((video: IVideoShare) => (
               <li key={video.id} className="mt-12">
                 <ShareCard video={video} />
               </li>

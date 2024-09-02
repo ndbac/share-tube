@@ -1,6 +1,6 @@
 "use client"
 
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect, useCallback } from 'react';
 
 interface AuthContextType {
   isAuthenticated: boolean;
@@ -18,17 +18,17 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setIsAuthenticated(!!token);
   }, []);
 
-  const login = (token: string, refreshToken: string) => {
+  const login = useCallback((token: string, refreshToken: string) => {
     localStorage.setItem('token', token);
     localStorage.setItem('refreshToken', refreshToken);
     setIsAuthenticated(true);
-  };
+  }, []);
 
-  const logout = () => {
+  const logout = useCallback(() => {
     localStorage.removeItem('token');
     localStorage.removeItem('refreshToken');
     setIsAuthenticated(false);
-  };
+  }, []);
 
   return (
     <AuthContext.Provider value={{ isAuthenticated, login, logout }}>

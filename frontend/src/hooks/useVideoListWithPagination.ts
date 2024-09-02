@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react';
-import { fetchSharedVideos } from '@/services/axiosService';
-import { IVideoShare } from '@/types';
+import { useState, useEffect, useCallback } from "react";
+import { fetchSharedVideos } from "@/services/axiosService";
+import { IVideoShare } from "@/types";
+import { useVideoContext } from "@/context/VideoContext";
 
 interface Pagination {
   page: number;
@@ -8,17 +9,21 @@ interface Pagination {
   total: number;
 }
 
-interface UseVideoListWithPaginationResult {
+export interface UseVideoListWithPaginationResult {
   videos: IVideoShare[];
   pagination: Pagination;
   loading: boolean;
   error: string | null;
   handleNextPage: () => void;
   handlePreviousPage: () => void;
+  resetPagination: () => void;
 }
 
-const useVideoListWithPagination = (initialPageSize: number): UseVideoListWithPaginationResult => {
-  const [videos, setVideos] = useState<IVideoShare[]>([]);
+const useVideoListWithPagination = (
+  initialPageSize: number
+): UseVideoListWithPaginationResult => {
+  const { addVideos, videos, reset } = useVideoContext();
+  const [videoData, setVideoData] = useState<IVideoShare[]>([]);
   const [page, setPage] = useState(1);
   const [pageSize] = useState(initialPageSize);
   const [loading, setLoading] = useState(false);
@@ -29,41 +34,72 @@ const useVideoListWithPagination = (initialPageSize: number): UseVideoListWithPa
     total: 0,
   });
 
-  useEffect(() => {
-    const fetchData = async () => {
+  const fetchData = useCallback(
+    async (page: number, pageSize: number) => {
       setLoading(true);
       setError(null);
       try {
         const result = await fetchSharedVideos(page, pageSize);
-        setVideos(result.data);
+        addVideos(result.data);
         setPagination(result.pagination);
+        setVideoData(result.data);
       } catch (error) {
-        setError('Failed to fetch videos. Please try again.');
+        setError("Failed to fetch videos. Please try again.");
       } finally {
         setLoading(false);
       }
-    };
+    },
+    [addVideos]
+  );
 
-    fetchData();
-  }, [page, pageSize]);
+  useEffect(() => {
+    const start = (page - 1) * pageSize;
+    const end = start + pageSize;
+    const pageVideos = videos.slice(start, end);
+
+    if (pageVideos.length) {
+      setVideoData(pageVideos);
+      setPagination((prev) => ({ ...prev, page }));
+    } else {
+      fetchData(page, pageSize);
+    }
+  }, [addVideos, fetchData, page, pageSize, videos]);
 
   const handleNextPage = () => {
     if (page < Math.ceil(pagination.total / pagination.pageSize)) {
-      setPage((prevPage) => prevPage + 1);
+      setPage((prevPage) => {
+        const nextPage = prevPage + 1;
+        return nextPage;
+      });
     }
   };
 
   const handlePreviousPage = () => {
-    setPage((prevPage) => Math.max(prevPage - 1, 1));
+    setPage((prevPage) => {
+      const prevPageNum = Math.max(prevPage - 1, 1);
+      return prevPageNum;
+    });
+  };
+
+  const resetPagination = () => {
+    reset();
+    setVideoData([]);
+    setPage(1);
+    setPagination({
+      page: 1,
+      pageSize: initialPageSize,
+      total: 0,
+    });
   };
 
   return {
-    videos,
+    videos: videoData,
     pagination,
     loading,
     error,
     handleNextPage,
     handlePreviousPage,
+    resetPagination,
   };
 };
 

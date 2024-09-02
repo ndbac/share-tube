@@ -1,20 +1,25 @@
-"use client"
+"use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import ShareList from "@/components/ShareList";
 import { useAuthContext } from "@/context/AuthContext";
 import { socketService } from "@/services/socketService";
 import { IOnNewShareEventPayload } from "@/types";
+import useVideoListWithPagination from "@/hooks/useVideoListWithPagination";
 
 export default function Home() {
   const { isAuthenticated } = useAuthContext();
+  const videoWithPagination = useVideoListWithPagination(5);
+  const [newVideo, setNewVideo] = useState<IOnNewShareEventPayload | null>(
+    null
+  );
 
   useEffect(() => {
     if (isAuthenticated) {
       socketService.connect();
 
       socketService.onNewShare((payload: IOnNewShareEventPayload) => {
-        console.log("New video shared:", payload);
+        setNewVideo(payload);
       });
 
       return () => {
@@ -23,9 +28,21 @@ export default function Home() {
     }
   }, [isAuthenticated]);
 
+  const handlePopupClick = () => {
+    if (newVideo) {
+      setNewVideo(null);
+      videoWithPagination.resetPagination();
+    }
+  };
+
   return (
     <main>
-      <ShareList />
+      {newVideo && (
+        <div className="popup" onClick={handlePopupClick}>
+          New video shared! Click to view.
+        </div>
+      )}
+      <ShareList videoWithPagination={videoWithPagination} />
     </main>
   );
 }
