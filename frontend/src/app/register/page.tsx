@@ -8,15 +8,7 @@ import { useAuthContext } from '@/context/AuthContext';
 import { register as registerUser } from '@/services/axiosService';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-
-const schema = yup.object().shape({
-  name: yup.string().required('Name is required'),
-  email: yup.string().email('Invalid email format').required('Email is required'),
-  password: yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
-  confirmPassword: yup.string()
-    .oneOf([yup.ref('password')], 'Passwords must match')
-    .required('Confirm Password is required'),
-});
+import { schema, FormData } from './schema';
 
 export default function Register() {
   const { register, handleSubmit, formState: { errors } } = useForm({
@@ -27,7 +19,7 @@ export default function Register() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: FormData) => {
     setLoading(true);
     setError(null);
     try {

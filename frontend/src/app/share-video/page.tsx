@@ -8,13 +8,7 @@ import { shareVideo } from "@/services/axiosService";
 import { useRouter } from "next/navigation";
 import { useVideoContext } from "@/context/VideoContext";
 import ProtectedRoute from "../protectedRoutes";
-
-const schema = yup.object().shape({
-  youtubeUrl: yup
-    .string()
-    .url("Invalid URL")
-    .required("YouTube URL is required"),
-});
+import { schema, FormData } from "./schema";
 
 export default function Share() {
   const {
@@ -31,7 +25,7 @@ export default function Share() {
   const router = useRouter();
   const { resetPagination } = useVideoContext();
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: FormData) => {
     setLoading(true);
     setError(null);
     setSuccess(null);
