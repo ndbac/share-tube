@@ -6,6 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { shareVideo } from '@/services/axiosService';
 import { useRouter } from 'next/navigation';
+import { useVideoContext } from '@/context/VideoContext';
 
 const schema = yup.object().shape({
   youtubeUrl: yup.string().url('Invalid URL').required('YouTube URL is required'),
@@ -20,6 +21,7 @@ export default function Share() {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const router = useRouter();
+  const { resetPagination } = useVideoContext();
 
   const onSubmit = async (data: any) => {
     setLoading(true);
@@ -29,6 +31,7 @@ export default function Share() {
     try {
       await shareVideo(data.youtubeUrl);
       setSuccess('Video shared successfully!');
+      resetPagination();
       setTimeout(() => {
         router.push('/');
       }, 1000);

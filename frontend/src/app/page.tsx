@@ -5,14 +5,12 @@ import ShareList from "@/components/ShareList";
 import { useAuthContext } from "@/context/AuthContext";
 import { socketService } from "@/services/socketService";
 import { IOnNewShareEventPayload } from "@/types";
-import useVideoListWithPagination from "@/hooks/useVideoListWithPagination";
+import { useVideoContext } from "@/context/VideoContext";
 
 export default function Home() {
   const { isAuthenticated } = useAuthContext();
-  const videoWithPagination = useVideoListWithPagination(5);
-  const [newVideo, setNewVideo] = useState<IOnNewShareEventPayload | null>(
-    null
-  );
+  const { resetPagination } = useVideoContext();
+  const [newVideo, setNewVideo] = useState<IOnNewShareEventPayload | null>(null);
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -31,7 +29,7 @@ export default function Home() {
   const handlePopupClick = () => {
     if (newVideo) {
       setNewVideo(null);
-      videoWithPagination.resetPagination();
+      resetPagination();
     }
   };
 
@@ -42,7 +40,7 @@ export default function Home() {
           New video shared! Click to view.
         </div>
       )}
-      <ShareList videoWithPagination={videoWithPagination} />
+      <ShareList />
     </main>
   );
 }
