@@ -8,7 +8,7 @@ import { useAuthContext } from "@/context/AuthContext";
 import { login as loginUser } from "@/services/axiosService";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { schema, FormData } from "./schema";
+import { schema, ILoginPayload } from "./schema";
 import { isAxiosError } from "axios";
 import { DEFAULT_ERROR_MESSAGE } from "@/types/constants";
 
@@ -25,7 +25,7 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = async (data: ILoginPayload) => {
     setLoading(true);
     setError(null);
     try {

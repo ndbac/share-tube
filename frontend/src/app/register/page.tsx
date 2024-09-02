@@ -8,7 +8,7 @@ import { useAuthContext } from "@/context/AuthContext";
 import { register as registerUser } from "@/services/axiosService";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { schema, FormData } from "./schema";
+import { schema, IRegisterAccountPayload } from "./schema";
 import { isAxiosError } from "axios";
 import { DEFAULT_ERROR_MESSAGE } from "@/types/constants";
 
@@ -25,7 +25,7 @@ export default function Register() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = async (data: IRegisterAccountPayload) => {
     setLoading(true);
     setError(null);
     try {

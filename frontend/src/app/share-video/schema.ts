@@ -1,6 +1,6 @@
 import * as yup from "yup";
 
-export interface FormData {
+export interface IShareVideoPayload {
   youtubeUrl: string;
 }
 

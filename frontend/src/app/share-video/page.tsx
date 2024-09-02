@@ -8,7 +8,7 @@ import { shareVideo } from "@/services/axiosService";
 import { useRouter } from "next/navigation";
 import { useVideoContext } from "@/context/VideoContext";
 import ProtectedRoute from "../protectedRoutes";
-import { schema, FormData } from "./schema";
+import { schema, IShareVideoPayload } from "./schema";
 import { isAxiosError } from "axios";
 import { DEFAULT_ERROR_MESSAGE } from "@/types/constants";
 
@@ -27,7 +27,7 @@ export default function Share() {
   const router = useRouter();
   const { resetPagination } = useVideoContext();
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = async (data: IShareVideoPayload) => {
     setLoading(true);
     setError(null);
     setSuccess(null);
