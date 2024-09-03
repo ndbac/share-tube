@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 import { useAuthContext } from "@/context/AuthContext";
 import { login as loginUser } from "@/services/axiosService";
 import { useRouter } from "next/navigation";

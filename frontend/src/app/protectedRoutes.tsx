@@ -13,14 +13,21 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
-    if (!isAuthenticated) {
-      router.push("/login");
-    }
+    const timer = setTimeout(() => {
+      if (!isAuthenticated) {
+        enqueueSnackbar("You need to login to access this page", {
+          variant: "warning",
+          preventDuplicate: true,
+        });
+        router.push("/login");
+      }
+    }, 500);
+
+    return () => clearTimeout(timer);
   }, [enqueueSnackbar, isAuthenticated, router]);
 
   if (!isAuthenticated) {
-    enqueueSnackbar("You need to login to access this page", { variant: "warning", preventDuplicate: true });
-    return <div />;
+    return null;
   }
 
   return <>{children}</>;
