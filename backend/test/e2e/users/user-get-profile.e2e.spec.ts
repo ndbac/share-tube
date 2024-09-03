@@ -61,6 +61,7 @@ describe('user get account profile e2e', () => {
       });
       expect(res.body).toEqual({
         message: 'Invalid token',
+        errorCode: 'InvalidToken',
       });
     });
   });

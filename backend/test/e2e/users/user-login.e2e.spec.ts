@@ -66,7 +66,7 @@ describe('user login account e2e', () => {
       });
       expect(res.body).toEqual({
         error: 'Forbidden',
-        message: 'Invalid email or password',
+        message: 'Email or password is incorrect, please try again',
         statusCode: 403,
       });
     });

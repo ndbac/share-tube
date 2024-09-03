@@ -90,6 +90,7 @@ describe('user shares a video e2e', () => {
         accessToken: 'invalid token',
       });
       expect(res.body).toEqual({
+        errorCode: 'InvalidToken',
         message: 'Invalid token',
       });
     });
