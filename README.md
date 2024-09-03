@@ -12,3 +12,7 @@ To see detailed installation documentation, please go to the respective folders:
 
 - For backend documentation, go to the `backend` folder.
 - For frontend documentation, go to the `frontend` folder.
+
+Website: [ShareTube](https://sharetube-app.checkly.world/)
+
+API Documentation: https://sharetube-server.checkly.world/sharetube/docs
