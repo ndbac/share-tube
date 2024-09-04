@@ -85,6 +85,25 @@ $ cd backend
 $ yarn run test
 ```
 
+## Usage
+
+Register and login to an accoun first
+
+![alt](/assets/images/register.png)
+![alt](/assets/images/login.png)
+
+Home page where you can view other shares
+![alt text](/assets/images/home.png)
+
+There will be a notification on the bottom left corner when someone shares a video
+![alt text](/assets/images/noti.png)
+
+If you want to share a video, just paste the Youtube video link and click share in Share page
+![alt text](/assets/images/share.png)
+
+- Website: https://sharetube.checkly.world
+- API Docs: https://sharetube-server.checkly.world/sharetube/docs
+
 ## Troubleshooting
 
 ##### Cannot share Youtube videos:
