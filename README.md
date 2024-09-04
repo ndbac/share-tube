@@ -13,6 +13,9 @@ Website: https://sharetube.checkly.world
 
 API Docs: https://sharetube-server.checkly.world/sharetube/docs
 
+## System design:
+![alt text](./assets/images/system.png)
+
 ## Prerequisites
 1. Node.js version >= 18
 2. Docker
@@ -69,7 +72,7 @@ $ npm run dev
 ## Installation (Docker)
 
 ```bash
-# Run backend and frontend with docker
+# Run backend and frontend with docker (in root project folder)
 # Frontend: http://localhost:3000
 # Backend: http://localhost:3001/sharetube/docs
 $ docker-compose up
