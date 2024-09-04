@@ -17,7 +17,7 @@ export default function Home() {
     socketService.connect();
 
     socketService.onNewShare((payload: IOnNewShareEventPayload) => {
-      enqueueSnackbar(`${payload.user.name} just shared a new video!`, {
+      enqueueSnackbar(`${payload.user.name} just shared a new video: ${payload.title}`, {
         variant: "info",
         action: <button onClick={resetPagination}>View</button>,
       });

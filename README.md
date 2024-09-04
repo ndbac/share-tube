@@ -2,11 +2,12 @@
 
 ##### ShareTube is a movie sharing site where you can register an account and share movies you like within a click.
 
-## Features
-- **Registration & Login**: Create an account and log in to access all features.
-- **Share Clip**: Share your favorite movie clips instantly.
-- **View Videos**: All shared videos are listed on the homepage for easy viewing.
-- **Instant Notifications**: Receive instant notifications when others share clips.
+## Features Checklist
+
+- [x] User registration and login
+- [x] Sharing YouTube videos
+- [x] Viewing a list of shared videos (no need to display up/down votes)
+- [x] Real-time notifications for new video shares: When a user shares a new video, other logged-in users should receive a real-time notification about the newly shared video. This notification can be displayed as a pop-up or a banner in the application, and it should contain the video title and the name of the user who shared it.
 
 Website: https://sharetube.checkly.world
 
