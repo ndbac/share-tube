@@ -19,14 +19,12 @@ services:
     depends_on:
       - db
     environment:
-      # PostgreSQL connection details
       MAIN_POSTGRES_URL: postgres://sharetube:sharetube@db:5432/sharetube
       MAIN_POSTGRES_DB_NAME: $POSTGRES_DB
       MAIN_POSTGRES_SCHEMA: public
       MAIN_POSTGRES_SYNC_ENABLED: true
       MAIN_POSTGRES_LOGGING_ENABLED: true
 
-      # PostgreSQL migration details
       MAIN_POSTGRES_HOST: localhost
       MAIN_POSTGRES_PORT: 5432
       MAIN_POSTGRES_DATABASE: $POSTGRES_DB

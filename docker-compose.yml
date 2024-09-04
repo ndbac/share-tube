@@ -1,0 +1,45 @@
+version: "3.1"
+
+services:
+  db:
+    image: postgres:12.12-alpine
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: sharetube
+      POSTGRES_DB: sharetube
+      POSTGRES_USER: sharetube
+    ports:
+      - "5432:5432"
+
+  be:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    depends_on:
+      - db
+    environment:
+      MAIN_POSTGRES_URL: postgres://sharetube:sharetube@db:5432/sharetube
+      MAIN_POSTGRES_DB_NAME: sharetube
+      MAIN_POSTGRES_SCHEMA: public
+      MAIN_POSTGRES_SYNC_ENABLED: true
+      MAIN_POSTGRES_LOGGING_ENABLED: true
+
+      MAIN_POSTGRES_HOST: localhost
+      MAIN_POSTGRES_PORT: 5432
+      MAIN_POSTGRES_DATABASE: sharetube
+      MAIN_POSTGRES_USERNAME: sharetube
+      MAIN_POSTGRES_PASSWORD: sharetube
+
+  fe:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      NEXT_PUBLIC_API_BASE_URL: http://localhost:3001/api/sharetube
+      NEXT_PUBLIC_SOCKET_URL: http://localhost:3001
+    depends_on:
+      - be

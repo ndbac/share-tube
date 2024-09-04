@@ -1,4 +1,4 @@
-FROM node:16
+FROM node:18-alpine
 
 ARG WORK_DIR=/var/src/node
 WORKDIR ${WORK_DIR}
