@@ -9,6 +9,7 @@
 - **Instant Notifications**: Receive instant notifications when others share clips.
 
 Website: https://sharetube.checkly.world
+
 API Docs: https://sharetube-server.checkly.world/sharetube/docs
 
 ## Prerequisites
@@ -88,7 +89,6 @@ $ yarn run test
 ## Usage
 
 Register and login to an accoun first
-
 ![alt](/assets/images/register.png)
 ![alt](/assets/images/login.png)
 
