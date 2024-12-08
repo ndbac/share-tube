@@ -1,21 +1,20 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { CreateUserInputDto, UserLoginInputDto } from '../dto/users.dto';
 import _ from 'lodash';
-import { UserRecord } from '../user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 import { BcryptService } from 'src/modules/common/bcrypt/bcrypt.service';
 import { JwtService } from 'src/modules/common/jsonwebtoken/jwt.service';
 import { v4 as uuidv4 } from 'uuid';
 import { generateRandomString } from 'src/shared/helpers';
+import { UserRepository } from '../user.repository';
 
 const REFRESH_TOKEN_LENGTH = 32;
 
 @Injectable()
 export class UserService {
   constructor(
-    @InjectRepository(UserRecord)
-    private readonly userRepository: Repository<UserRecord>,
+    @InjectRepository(UserRepository)
+    private readonly userRepository: UserRepository,
     private readonly encryptService: BcryptService,
     private readonly jwtService: JwtService,
   ) {}

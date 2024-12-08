@@ -16,20 +16,17 @@ server:
 db:
   postgres:
     type: postgres
-    url: postgres://sharetube:sharetube@localhost:5432/sharetube
-    dbName: sharetube
+    host: localhost
+    port: 5432
+    username: sharetube
+    password: sharetube
+    database: sharetube
     schema: public
     keepConnectionAlive: false
     synchronize: false
     ssl: false
     dropSchema: false
     logging: false
-  migration:
-    host: localhost
-    port: 5432
-    database: sharetube
-    username: sharetube
-    password: sharetube
 
 bcrypt:
   saltRoundQuantity: 14
@@ -43,3 +40,12 @@ jsonwebtoken:
 youtube:
   baseUrl: https://www.googleapis.com/youtube/v3/
   apiKey: sample-secret-key
+
+nodemailer:
+  host: smtp.ethereal.email
+  port: 587
+  secure: false
+  auth:
+    user: sample-user@mail.com
+    pass: sample-password
+  from: hi@sharetube.com

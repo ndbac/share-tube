@@ -3,15 +3,14 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Request, Response, NextFunction } from 'express';
 import { JwtPayload } from 'jsonwebtoken';
 import { JwtService } from 'src/modules/common/jsonwebtoken/jwt.service';
-import { UserRecord } from 'src/modules/users/user.entity';
+import { UserRepository } from 'src/modules/users/user.repository';
 import { getBearerTokenFromRequest } from 'src/shared/helpers';
-import { Repository } from 'typeorm';
 
 @Injectable()
 export class UserMiddleware implements NestMiddleware {
   constructor(
-    @InjectRepository(UserRecord)
-    private readonly userRepository: Repository<UserRecord>,
+    @InjectRepository(UserRepository)
+    private readonly userRepository: UserRepository,
     private readonly jwtService: JwtService,
   ) {}
 

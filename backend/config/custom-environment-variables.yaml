@@ -5,11 +5,14 @@ server:
 
 db:
   postgres:
-    url: MAIN_POSTGRES_URL
+    host: MAIN_POSTGRES_HOST
+    port: MAIN_POSTGRES_PORT
+    username: MAIN_POSTGRES_USER
+    password: MAIN_POSTGRES_PASSWORD
+    database: MAIN_POSTGRES_DB
     ssl:
       __name: MAIN_POSTGRES_SSL
       __format: json
-    dbName: MAIN_POSTGRES_DB_NAME
     schema: MAIN_POSTGRES_SCHEMA
     synchronize:
       __name: MAIN_POSTGRES_SYNC_ENABLED
@@ -17,12 +20,17 @@ db:
     logging:
       __name: MAIN_POSTGRES_LOGGING_ENABLED
       __format: json
-  migration:
-    host: MAIN_POSTGRES_HOST
-    port: MAIN_POSTGRES_PORT
-    database: MAIN_POSTGRES_DATABASE
-    username: MAIN_POSTGRES_USERNAME
-    password: MAIN_POSTGRES_PASSWORD
 
 youtube:
   apiKey: YOUTUBE_API_KEY
+
+nodemailer:
+  host: NODEMAILER_HOST
+  port: NODEMAILER_PORT
+  secure:
+    __name: NODEMAILER_SERCURE
+    __format: json
+  auth:
+    user: NODEMAILER_AUTH_USER
+    pass: NODEMAILER_AUTH_PASS
+  from: NODEMAILER_FROM

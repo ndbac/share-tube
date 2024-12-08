@@ -7,7 +7,7 @@
 - [x] User registration and login
 - [x] Sharing YouTube videos
 - [x] Viewing a list of shared videos (no need to display up/down votes)
-- [x] Real-time notifications for new video shares: When a user shares a new video, other logged-in users should receive a real-time notification about the newly shared video. This notification can be displayed as a pop-up or a banner in the application, and it should contain the video title and the name of the user who shared it.
+- [x] Real-time notifications for new video shares: When a user shares a new video, other logged-in users should receive a real-time notification about the newly shared video. This notification can be displayed as a pop-up or a banner in the application, and it should contain the video title and the name of the user who shared it. Besides, notification emails should be sent to users who are not online at that time.
 
 Website: https://sharetube.checkly.world
 

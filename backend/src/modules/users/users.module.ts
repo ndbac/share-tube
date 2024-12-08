@@ -6,14 +6,13 @@ import {
 } from '@nestjs/common';
 import { UserService } from './providers/users.service';
 import { UserController } from './controllers/users.controller';
-import { UserRecord } from './user.entity';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { CommonModule } from '../common/common.module';
 import { UserMiddleware } from 'src/middlewares/user.middleware';
 import { RefreshTokenMiddleware } from 'src/middlewares/fresh-token.middleware';
+import { UserCoreModule } from './users.core.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([UserRecord]), CommonModule],
+  imports: [UserCoreModule, CommonModule],
   controllers: [UserController],
   providers: [UserService],
 })

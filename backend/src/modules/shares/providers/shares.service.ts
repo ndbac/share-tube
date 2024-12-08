@@ -1,7 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { ShareRecord } from '../shares.entity';
 import { ShareInputDto } from '../dto/shares.dto';
 import { YoutubeService } from 'src/adapters/youtube/youtube.service';
 import { IIamUser, IPagination } from 'src/shared/types';
@@ -9,12 +7,13 @@ import { getPaginationHeaders } from 'src/shared/pagination.helpers';
 import { WebsocketGateway } from 'src/adapters/websocket/websocket.gateway';
 import _ from 'lodash';
 import { UserRecord } from 'src/modules/users/user.entity';
+import { ShareRepository } from '../shares.repository';
 
 @Injectable()
 export class ShareService {
   constructor(
-    @InjectRepository(ShareRecord)
-    private readonly shareRepository: Repository<ShareRecord>,
+    @InjectRepository(ShareRepository)
+    private readonly shareRepository: ShareRepository,
     private readonly youtubeService: YoutubeService,
     private readonly websocketGateway: WebsocketGateway,
   ) {}
