@@ -8,14 +8,20 @@ import { WebsocketGateway } from 'src/adapters/websocket/websocket.gateway';
 import _ from 'lodash';
 import { UserRecord } from 'src/modules/users/user.entity';
 import { ShareRepository } from '../shares.repository';
+import { UserRepository } from 'src/modules/users/user.repository';
+import { Not } from 'typeorm';
+import { NodemailerService } from 'src/adapters/node-mailer/node-mailer.provider';
 
 @Injectable()
 export class ShareService {
   constructor(
     @InjectRepository(ShareRepository)
     private readonly shareRepository: ShareRepository,
+    @InjectRepository(UserRepository)
+    private readonly userRepository: UserRepository,
     private readonly youtubeService: YoutubeService,
     private readonly websocketGateway: WebsocketGateway,
+    private readonly nodemailerService: NodemailerService,
   ) {}
 
   async filterShares(pagination: IPagination) {
@@ -72,6 +78,28 @@ export class ShareService {
         email: user.email,
       },
     });
+
+    const listUsers = await this.userRepository.find({
+      where: {
+        id: Not(user.userId),
+      },
+    });
+
+    await Promise.all(
+      listUsers.map((user) => {
+        try {
+          this.nodemailerService.sendEmail(
+            user.email,
+            'New video shared',
+            `Hi ${user.name},\n\n${user.name} has shared a new video with you. Please visit the link below to watch it:\n\n${payload.youtubeUrl}\n\nBest regards,\nVideo sharing team`,
+          );
+        } catch (error) {
+          console.error(
+            `Failed to send email notification to user: ${user.email}`,
+          );
+        }
+      }),
+    );
 
     return share;
   }
